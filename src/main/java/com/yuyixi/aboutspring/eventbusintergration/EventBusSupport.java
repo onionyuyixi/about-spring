@@ -20,10 +20,10 @@ package com.yuyixi.aboutspring.eventbusintergration;
  *
  * @author  jbellmann
  */
-public interface EventBusSupport {
+public interface EventBusSupport<E extends BaseEvent> {
 
-    void post(BaseEvent event);
+    void post(E event);
 
-    void postAsync(BaseEvent event);
+    void postAsync(E event);
 
 }
