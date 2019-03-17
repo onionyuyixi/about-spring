@@ -1,6 +1,6 @@
-package com.yuyixi.aboutspring.eventlistener;
+package com.yuyixi.aboutspring.java.eventlistener;
 
-import com.yuyixi.aboutspring.event.MyEvent;
+import com.yuyixi.aboutspring.java.event.MyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;

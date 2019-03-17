@@ -1,9 +1,8 @@
-package com.yuyixi.aboutspring.publisher;
+package com.yuyixi.aboutspring.java.publisher;
 
-import com.yuyixi.aboutspring.event.MyEvent;
+import com.yuyixi.aboutspring.java.event.MyEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationEvent;
 import org.springframework.stereotype.Component;
 
 /**

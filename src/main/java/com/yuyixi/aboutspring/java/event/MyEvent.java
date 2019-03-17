@@ -1,4 +1,4 @@
-package com.yuyixi.aboutspring.event;
+package com.yuyixi.aboutspring.java.event;
 
 import lombok.Data;
 import org.springframework.context.ApplicationEvent;
