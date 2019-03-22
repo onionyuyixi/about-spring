@@ -1,7 +1,8 @@
 package com.yuyixi.aboutspring;
 
+import com.yuyixi.aboutspring.eventbusintergration.EventBusSupport;
 import com.yuyixi.aboutspring.eventbusintergration.event.OnionEvent;
-import com.yuyixi.aboutspring.eventbusintergration.eventpublish.EventPublish;
+import com.yuyixi.aboutspring.eventbusintergration.event.YuyixiEvent;
 import com.yuyixi.aboutspring.guava.EventBusFacade;
 import com.yuyixi.aboutspring.guava.event.TestEvent;
 import com.yuyixi.aboutspring.guava.smsdemo.Order;
@@ -15,9 +16,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.concurrent.Executors;
-import java.util.concurrent.atomic.AtomicInteger;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -56,19 +54,61 @@ public class AboutSpringApplicationTests {
 
 
     @Autowired
-    EventPublish eventPublish;
+    EventBusSupport<OnionEvent> eventBusSupport;
 
     @Test
     public void testEventPublish() throws JSONException {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("one", 1);
-        jsonObject.put("two", 2);
-        jsonObject.put("three", 3);
-        jsonObject.put("four", 4);
         OnionEvent event = new OnionEvent(jsonObject);
         event.setSrc("123");
         event.setDesc("消息快快飞");
-        eventPublish.pushlishEvent(event);
+        eventBusSupport.post(event);
+        JSONObject jsonObject1 = new JSONObject();
+        jsonObject1.put("one", 2);
+        OnionEvent event1 = new OnionEvent(jsonObject1);
+        event1.setSrc("123");
+        event1.setDesc("消息快快飞");
+        eventBusSupport.post(event1);
+    }
+
+
+
+
+    @Test
+    public void testEventPublishAsync() throws JSONException {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("one", 1);
+        OnionEvent event = new OnionEvent(jsonObject);
+        event.setSrc("123");
+        event.setDesc("消息快快飞");
+        eventBusSupport.postAsync(event);
+        JSONObject jsonObject1 = new JSONObject();
+        jsonObject1.put("one", 2);
+        OnionEvent event1 = new OnionEvent(jsonObject1);
+        event1.setSrc("123");
+        event1.setDesc("消息快快飞");
+        eventBusSupport.postAsync(event1);
+    }
+
+
+    @Autowired
+    EventBusSupport<YuyixiEvent> yuyixiEventBusSupport;
+
+    @Test
+    public void testYuyixi() throws JSONException {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("one", "yuyixi");
+        YuyixiEvent event = new YuyixiEvent(jsonObject);
+        event.setDesc("123");
+        event.setNo(1);
+        yuyixiEventBusSupport.postAsync(event);
+        JSONObject jsonObject1 = new JSONObject();
+        jsonObject1.put("one", "与乙烯");
+        YuyixiEvent event1 = new YuyixiEvent(jsonObject1);
+        event1.setNo(2);
+        event1.setDesc("消息快快飞");
+        yuyixiEventBusSupport.post(event1);
     }
 
 
