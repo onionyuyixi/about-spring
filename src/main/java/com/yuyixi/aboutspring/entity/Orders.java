@@ -15,7 +15,7 @@ import javax.persistence.Table;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Order {
+public class Orders {
 
     @Id
     private Long id;
@@ -23,4 +23,6 @@ public class Order {
     private String userName;
 
     private String orderNo;
+
+    private Long goodsId;
 }

@@ -15,7 +15,7 @@ import javax.persistence.Table;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Goods {
+public class Good {
 
     @Id
     private Long id;
