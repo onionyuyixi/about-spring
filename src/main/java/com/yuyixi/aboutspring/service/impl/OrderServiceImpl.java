@@ -28,13 +28,7 @@ public class OrderServiceImpl implements OrderService {
     public void addOrder(Orders order) {
         orderRepository.save(order);
         DecreaseStockEvent event = new DecreaseStockEvent(order.getGoodsId());
-        //解耦值guava
-        System.err.println("解耦值guava");
         eventPublish.pushlishEventAsync(event);
-
-
-        //逻辑链状串行
-        System.err.println("逻辑链状串行");
         ListeningExecutorService service = MoreExecutors.listeningDecorator(Executors.newFixedThreadPool(10));
         ListenableFuture<?> addOrder = service.submit(() -> {
             Orders orders = Orders.builder()
@@ -46,6 +40,5 @@ public class OrderServiceImpl implements OrderService {
             orderRepository.save(orders);
         });
         addOrder.addListener(() -> goodService.decreaseStock(order.getGoodsId()),service);
-
     }
 }
