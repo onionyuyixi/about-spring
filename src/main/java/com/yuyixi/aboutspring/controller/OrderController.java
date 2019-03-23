@@ -5,6 +5,8 @@ import com.yuyixi.aboutspring.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.concurrent.ExecutionException;
+
 @RestController
 @RequestMapping("/order/")
 public class OrderController {
@@ -13,7 +15,7 @@ public class OrderController {
     private OrderService orderService;
 
     @PostMapping("add")
-    public Object addUser(@RequestBody Orders orders){
+    public Object addUser(@RequestBody Orders orders) {
         try {
             orderService.addOrder(orders);
             return true;
@@ -24,12 +26,12 @@ public class OrderController {
 
 
     @GetMapping("test")
-    public Object test(){
-        for (int i = 0; i < 1000; i=i+2) {
-            Orders orders = Orders.builder().id(new Long(i)).userName(i + "---order").orderNo("order--" + i)
-                    .goodsId(new Long(1)).build();
-            orderService.addOrder(orders);
-        }
+    public Object test() throws ExecutionException, InterruptedException {
+//        for (int i = 0; i < 1000; i=i+3) {
+        Orders orders = Orders.builder().id(new Long(1)).userName(1 + "---order").orderNo("order--" + 1)
+                .goodsId(new Long(1)).build();
+        orderService.addOrder(orders);
+//        }
         return true;
     }
 
