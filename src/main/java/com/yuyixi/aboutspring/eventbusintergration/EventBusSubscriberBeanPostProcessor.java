@@ -30,9 +30,7 @@ import com.google.common.eventbus.AsyncEventBus;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 
-/**
- * @author  jbellmann
- */
+
 public class EventBusSubscriberBeanPostProcessor implements BeanPostProcessor {
 
     private final Logger logger = LoggerFactory.getLogger(EventBusSubscriberBeanPostProcessor.class);

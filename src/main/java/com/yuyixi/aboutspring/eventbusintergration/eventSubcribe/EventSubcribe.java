@@ -8,6 +8,8 @@ import com.yuyixi.aboutspring.service.GoodService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.concurrent.ThreadSafe;
+
 @Component
 public class EventSubcribe<E extends BaseEvent> {
 
@@ -15,7 +17,6 @@ public class EventSubcribe<E extends BaseEvent> {
     private GoodService goodService;
 
     @Subscribe
-    @AllowConcurrentEvents
     public void subcribeEven(E e) {
         System.err.println("我接受到了消息" + e.getPayLoad());
         if (e instanceof DecreaseStockEvent) {

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.locks.ReentrantLock;
 
 
 @Service
@@ -19,21 +20,28 @@ public class GoodServiceImpl implements GoodService {
     @Autowired
     private GoodRepository goodRepository;
 
+    ReentrantLock lock = new ReentrantLock();
+
     @Override
     public void addGoods(Good good) {
         goodRepository.save(good);
     }
 
     @Subscribe
-    @AllowConcurrentEvents
+//    @AllowConcurrentEvents
     public void decreaseStock(Long id) {
-        Optional<Good> byId = goodRepository.findById(id);
-        if (byId.isPresent()){
-            Good good = byId.get();
-            AtomicInteger aLong = new AtomicInteger(good.getStocks());
-            int l = aLong.decrementAndGet();
-            good.setStocks(l);
-            goodRepository.save(good);
-        }
+//        if(lock.tryLock()){
+//            lock.lock();
+            Optional<Good> byId = goodRepository.findById(id);
+            if (byId.isPresent()){
+                Good good = byId.get();
+                AtomicInteger aLong = new AtomicInteger(good.getStocks());
+                int l = aLong.decrementAndGet();
+                good.setStocks(l);
+                goodRepository.save(good);
+            }
+//            lock.unlock();
+//        }
+
     }
 }

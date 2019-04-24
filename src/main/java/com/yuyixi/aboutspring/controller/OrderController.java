@@ -27,11 +27,11 @@ public class OrderController {
 
     @GetMapping("test")
     public Object test() throws ExecutionException, InterruptedException {
-//        for (int i = 0; i < 1000; i=i+3) {
+
         Orders orders = Orders.builder().id(new Long(1)).userName(1 + "---order").orderNo("order--" + 1)
                 .goodsId(new Long(1)).build();
         orderService.addOrder(orders);
-//        }
+
         return true;
     }
 
