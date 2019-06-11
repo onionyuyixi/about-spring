@@ -1,14 +1,11 @@
 package com.yuyixi.aboutspring.eventbusintergration.eventSubcribe;
 
-import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
 import com.yuyixi.aboutspring.event.DecreaseStockEvent;
 import com.yuyixi.aboutspring.eventbusintergration.BaseEvent;
 import com.yuyixi.aboutspring.service.GoodService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import javax.annotation.concurrent.ThreadSafe;
 
 @Component
 public class EventSubcribe<E extends BaseEvent> {
