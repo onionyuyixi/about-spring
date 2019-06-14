@@ -1,0 +1,56 @@
+Spring provides two types of IoC container implementations. Spring提供了两种类型的IoC容器实现。
+The basic one is called a bean factory. 最基本的一个称为bean工厂
+更高级的一个称为application context 它与bean工厂兼容
+The more advanced one is called an application context, which is compatible with the bean factory.
+注意，这两种类型IoC容器的配置文件是相同的
+Note the configuration files for these two types of IoC containers are identical.
+
+application context比bean工厂 提供了更多先进的特点 同时保持了基本的兼容
+The application context provides more advanced features than the bean factory
+while keeping the basic features compatible.
+因此我们强烈推荐使用application context  除非这个资源是严格
+Therefore, we strongly recommend using the application context for every application
+unless the resources of an application are restricted (e.g., such as when running Spring for an applet or
+a mobile device).
+
+BeanFactory 和 ApplicationContext接口
+The interfaces for the bean factory and the application context are BeanFactory and ApplicationContext, respectively.
+ApplicationContext 是 BeanFactory的子类
+The ApplicationContext interface is a subinterface of BeanFactory for maintaining compatibility
+
+
+如何自定义对象的初始化 与 摧毁
+Spring can recognize initialization and destruction callback methods
+
+方法一 在对象加上一个@Bean  比如@Bean(initMethod = "openFile", destroyMethod = "closeFile")
+by setting the initMethod and destroyMethod attributes of the @Bean definition in a Java config class.
+
+方法二 @PostConstruct @PreDestroy注解
+Or Spring can also recognize initialization and destruction callback methods if POJO methods are decorated with the @PostConstruct
+and @PreDestroy annotations, respectively.
+
+懒惰加载对象 @Lazy  如果对象不被需要 则永不会初始化
+Spring can also delay the creation of a bean up until the point it’s required—a process called lazy initialization—with the @Lazy annotation.
+In the previous declaration, because the POJO is decorated with the @Lazy annotation,
+if the POJO is never required by the application or referenced by another POJO, it’s never instantiated.
+
+@DependsOn 依赖某一个对象的初始化完成后  才能进行初始化
+Spring can also ensure the initialization of certain beans before others with the @DependsOn annotation.
+
+
+Aware接口
+Even though a well-designed component should not have direct dependencies on Spring’s IoC container,
+sometimes it’s necessary for beans to be aware of the container’s resources
+
+
+
+
+
+
+
+
+
+
+
+
+
