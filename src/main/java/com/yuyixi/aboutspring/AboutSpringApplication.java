@@ -1,6 +1,6 @@
 package com.yuyixi.aboutspring;
 
-import com.yuyixi.aboutspring.ioc.postProcessors.Demo4Instance;
+import com.yuyixi.aboutspring.ioc.postprocessors.Demo4Instance;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
