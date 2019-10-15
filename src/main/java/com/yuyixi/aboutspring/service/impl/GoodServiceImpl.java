@@ -1,6 +1,5 @@
 package com.yuyixi.aboutspring.service.impl;
 
-import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
 import com.yuyixi.aboutspring.entity.Good;
 import com.yuyixi.aboutspring.repository.GoodRepository;
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.locks.ReentrantLock;
 
 
@@ -29,6 +27,7 @@ public class GoodServiceImpl implements GoodService {
 
     @Subscribe
 //    @AllowConcurrentEvents
+    @Override
     public void decreaseStock(Long id) {
 //        if(lock.tryLock()){
 //            lock.lock();

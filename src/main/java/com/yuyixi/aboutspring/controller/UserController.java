@@ -16,9 +16,39 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("add")
-    public Object addUser(@RequestBody User user){
+    public Object addUser(@RequestBody User user) {
         try {
             userService.addUser(user);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    @PostMapping("addUserWithTranscationAndTryIsNoUse")
+    public Object addUserWithTranscationAndTryIsNoUse(@RequestBody User user) {
+        try {
+            userService.addUserWithTranscationAndTryIsNoUse(user);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    @PostMapping("addUserWithTranscationAndTryIsNoUseButWeCanThrow")
+    public Object addUserWithTranscationAndTryIsNoUseButWeCanThrow(@RequestBody User user) {
+        try {
+            userService.addUserWithTranscationAndTryIsNoUseButWeCanThrow(user);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    @PostMapping("addUserWithTranscationAndTryIsNoUseButWeCanHandleBySelf")
+    public Object addUserWithTranscationAndTryIsNoUseButWeCanHandleBySelf(@RequestBody User user) {
+        try {
+            userService.addUserWithTranscationAndTryIsNoUseButWeCanHandleBySelf(user);
             return true;
         } catch (Exception e) {
             return false;

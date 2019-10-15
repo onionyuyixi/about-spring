@@ -1,7 +1,6 @@
 package com.yuyixi.aboutspring.asyncController;
 
 import com.google.common.collect.Lists;
-import io.netty.util.concurrent.CompleteFuture;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.task.AsyncListenableTaskExecutor;
 import org.springframework.scheduling.concurrent.ConcurrentTaskExecutor;
@@ -14,7 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.async.DeferredResult;
 
 import java.util.List;
-import java.util.concurrent.*;
+import java.util.concurrent.Callable;
+import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequestMapping("/async/")

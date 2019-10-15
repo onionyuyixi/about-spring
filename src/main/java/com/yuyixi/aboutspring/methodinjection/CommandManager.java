@@ -32,6 +32,7 @@ public class CommandManager implements ApplicationContextAware {
         return this.applicationContext.getBean("command", Command.class);
     }
 
+    @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         this.applicationContext = applicationContext;
     }

@@ -9,6 +9,7 @@ import com.yuyixi.aboutspring.guava.smsdemo.Order;
 import com.yuyixi.aboutspring.guava.smsdemo.TestOrderService;
 import com.yuyixi.aboutspring.java.event.MyEvent;
 import com.yuyixi.aboutspring.java.publisher.MyEventPublisher;
+import lombok.experimental.Delegate;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Test;
@@ -20,6 +21,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class AboutSpringApplicationTests {
+
 
     @Test
     public void contextLoads() {
@@ -110,6 +112,7 @@ public class AboutSpringApplicationTests {
         event1.setDesc("消息快快飞");
         yuyixiEventBusSupport.post(event1);
     }
+
 
 
 

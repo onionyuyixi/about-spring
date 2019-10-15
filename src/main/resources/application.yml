@@ -15,8 +15,8 @@ spring:
     database-platform:
     properties:
       hibernate:
-#        format_sql: true
-#        show_sql: true
+        format_sql: true
+        show_sql: true
   datasource:
     url: jdbc:mysql://192.168.110.129:3306/onion?createDatabaseIfNotExist=true&useSSL=false&useUnicode=true&characterEncoding=UTF-8
     username: root

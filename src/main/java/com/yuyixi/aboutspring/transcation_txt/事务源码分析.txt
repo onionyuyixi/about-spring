@@ -1,0 +1,65 @@
+入口
+TxNamespaceHandler类的init方法
+public class TxNamespaceHandler extends NamespaceHandlerSupport {
+
+	static final String TRANSACTION_MANAGER_ATTRIBUTE = "transaction-manager";
+
+	static final String DEFAULT_TRANSACTION_MANAGER_BEAN_NAME = "transactionManager";
+
+
+	static String getTransactionManagerName(Element element) {
+		return (element.hasAttribute(TRANSACTION_MANAGER_ATTRIBUTE) ?
+				element.getAttribute(TRANSACTION_MANAGER_ATTRIBUTE) : DEFAULT_TRANSACTION_MANAGER_BEAN_NAME);
+	}
+
+
+	@Override
+	public void init() {
+	    //有两种途径 xml解析 注解形式 AnnotationDrivenBeanDefinitionParser
+		registerBeanDefinitionParser("advice", new TxAdviceBeanDefinitionParser());
+		registerBeanDefinitionParser("annotation-driven", new AnnotationDrivenBeanDefinitionParser());
+		registerBeanDefinitionParser("jta-transaction-manager", new JtaTransactionManagerBeanDefinitionParser());
+	}
+
+}
+
+
+注解驱动解析类 默认采用JDK 代理去获取对象  因此只能代理接口 而非实际java类
+如果非得使用具体类  设置属性proxy-target-class 为true 可以参考 AspectJAutoProxyRegistrar类
+通过EnableTransactionManagement注解类 中的属性proxyTargetClass进行改变 默认是false
+
+AnnotationDrivenBeanDefinitionParser
+By default, all proxies are created as JDK proxies. This may cause some
+  problems if you are injecting objects as concrete classes rather than
+  interfaces. To overcome this restriction you can set the
+  '{@code proxy-target-class}' attribute to '{@code true}', which
+  will result in class-based proxies being created.
+
+
+
+AspectJAutoProxyRegistrar
+
+class AspectJAutoProxyRegistrar implements ImportBeanDefinitionRegistrar {
+
+	  Register, escalate, and configure the AspectJ auto proxy creator based on the value
+	  of the @{@link EnableAspectJAutoProxy#proxyTargetClass()} attribute on the importing
+	  {@code @Configuration} class.
+	public void registerBeanDefinitions(
+			AnnotationMetadata importingClassMetadata, BeanDefinitionRegistry registry) {
+
+		AopConfigUtils.registerAspectJAnnotationAutoProxyCreatorIfNecessary(registry);
+
+		AnnotationAttributes enableAJAutoProxy =
+				attributesFor(importingClassMetadata, EnableAspectJAutoProxy.class);
+		if (enableAJAutoProxy.getBoolean("proxyTargetClass")) {
+			AopConfigUtils.forceAutoProxyCreatorToUseClassProxying(registry);
+		}
+	}
+
+}
+
+
+
+
+事务事件监听
+TransactionalEventListener
