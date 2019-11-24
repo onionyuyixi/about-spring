@@ -15,9 +15,7 @@ import org.springframework.stereotype.Component;
 public class TestActor extends AbstractActor {
     @Override
     public Receive createReceive() {
-        return receiveBuilder().matchAny(o -> {
-            System.out.println("接受到消息：" + o);
-        }).build();
+        return receiveBuilder().matchAny(o -> System.err.println("接受到消息：" + o)).build();
     }
 
 }

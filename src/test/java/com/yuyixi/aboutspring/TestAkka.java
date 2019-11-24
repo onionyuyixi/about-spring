@@ -3,10 +3,12 @@ package com.yuyixi.aboutspring;
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import com.yuyixi.aboutspring.akka.SpringExtProvider;
+import com.yuyixi.aboutspring.akka.TestActor;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 /**
@@ -25,7 +27,10 @@ public class TestAkka {
 
     @Test
     public void contextLoads() {
-        ActorRef ref = actorSystem.actorOf(SpringExtProvider.getInstance().get(actorSystem).create("testActor"), "testActor");
-        ref.tell("hello", ActorRef.noSender());
+        ActorRef ref = actorSystem.actorOf(SpringExtProvider.getInstance().get(actorSystem)
+                .create("testActor"), "testActor");
+        ref.tell("nice",ActorRef.noSender());
     }
+
+
 }
