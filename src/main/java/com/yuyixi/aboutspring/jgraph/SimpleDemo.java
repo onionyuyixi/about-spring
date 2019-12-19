@@ -1,4 +1,4 @@
-package jgraph;
+package com.yuyixi.aboutspring.jgraph;
 
 import org.jgrapht.Graph;
 import org.jgrapht.alg.cycle.CycleDetector;

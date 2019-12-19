@@ -5,6 +5,9 @@ spring:
       clusterNodes: 10.10.10.128:9200
       username: elastic
       password: AWM2cmEdjJXgLkbD
+#    jpa:
+#      repositories:
+#        enabled: true
   jpa:
     database: mysql
     generate-ddl: false
@@ -12,15 +15,15 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
-    database-platform:
     properties:
       hibernate:
         format_sql: true
         show_sql: true
-  datasource:
-    url: jdbc:mysql://192.168.110.129:3306/onion?createDatabaseIfNotExist=true&useSSL=false&useUnicode=true&characterEncoding=UTF-8
-    username: root
-    password: root
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+    datasource:
+      url: jdbc:mysql://192.168.110.128:3306/onion?createDatabaseIfNotExist=true&useSSL=false&useUnicode=true&characterEncoding=UTF-8
+      username: root
+      password: Root&2019
     tomcat:
       max-active: 8
       max-idle: 4
@@ -30,3 +33,5 @@ spring:
       time-between-eviction-runs-millis: 360000
       initial-size: 5
     driver-class-name: com.mysql.jdbc.Driver
+
+
