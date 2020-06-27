@@ -3,7 +3,9 @@ package com.yuyixi.aboutspring.ImuutableList;
 import com.google.common.collect.Lists;
 
 import org.junit.jupiter.api.Test;
+import org.reactivestreams.Subscriber;
 import reactor.core.publisher.Flux;
+import reactor.core.scheduler.Schedulers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,16 +78,13 @@ public class ImuutableTest {
     @Test
     public void test4() {
         long start = System.currentTimeMillis();
-        for (int i = 0; i < 20; i++) {
-            List<Integer> list = Lists.newArrayList();
-            Flux.range(0, 10000000)
-                    .buffer(2147483647)//默认的最大buffer 同于buffer()
-                    .parallel(2 * (Runtime.getRuntime().availableProcessors()))
-                    .flatMap(integers -> Flux.fromIterable(integers))
-                    .subscribe(a -> list.add(a));
-            System.err.println(Thread.currentThread().getName()+"用时" + (System.currentTimeMillis() - start)); //速度最快
-            System.out.println("采用响应式 并行 带有最大buffer：" + list.size());
-        }
+        List<Integer> list = Lists.newArrayList();
+        Flux.range(0, 10000000)
+                .buffer(2147483647)//默认的最大buffer 同于buffer()
+                .parallel( (Runtime.getRuntime().availableProcessors()))
+                .flatMap(integers -> Flux.fromIterable(integers))
+                .subscribe(a -> list.add(a));
+        System.out.println("采用响应式 并行 带有最大buffer：" + list.size());
         System.err.println("test4用时" + (System.currentTimeMillis() - start)); //速度最快
     }
 
@@ -112,24 +111,50 @@ public class ImuutableTest {
                 .buffer(2147483647)//默认的最大buffer 同于buffer
                 .flatMap(integers -> Flux.fromIterable(integers)).
                 subscribe(a -> list.add(a));
-        System.err.println("用时" + (System.currentTimeMillis() - start)); //速度最快
+        System.err.println("用时" + (System.currentTimeMillis() - start));
         System.out.println("采用响应式 带有最大buffer：" + list.size());
     }
 
 
     @Test
     public void test7() {
-        for (int i = 0; i < 20; i++) {
-            ConcurrentLinkedQueue queue = new ConcurrentLinkedQueue<>();
-            long start = System.currentTimeMillis();
-            Flux.range(0, 10000000)
-                    .buffer(2147483647)//默认的最大buffer 同于buffer
-                    .parallel()
-                    .flatMap(integers -> Flux.fromIterable(integers)).
-                    subscribe(a -> queue.add(a));
-            System.err.println("用时" + (System.currentTimeMillis() - start)); //速度最快
-            System.out.println("采用响应式 并行 且使用queue 带有最大buffer：" + queue.size());
-        }
+        ConcurrentLinkedQueue queue = new ConcurrentLinkedQueue<>();
+        long start = System.currentTimeMillis();
+        Flux.range(0, 10000000)
+                .buffer(2147483647)//默认的最大buffer 同于buffer
+                .parallel()
+                .flatMap(integers -> Flux.fromIterable(integers)).
+                subscribe(a -> queue.add(a));
+        System.err.println("用时" + (System.currentTimeMillis() - start));
+        System.out.println("采用响应式 并行 且使用queue 带有最大buffer：" + queue.size());
+    }
+
+    @Test
+    public void test8() {
+        List<Integer> list = Lists.newArrayList();
+        long start = System.currentTimeMillis();
+        Flux.range(0, 10000000)
+                .buffer(2147483647)//默认的最大buffer 同于buffer
+                .parallel()
+                .runOn(Schedulers.parallel())
+                .flatMap(integers -> Flux.fromIterable(integers))
+                .subscribe(a -> list.add(a));
+        System.err.println("用时" + (System.currentTimeMillis() - start));
+        System.out.println("采用响应式 并行 带有最大buffer：" + list.size());
+    }
+
+    @Test
+    public void test9() {
+        List<Integer> list = Lists.newArrayList();
+        long start = System.currentTimeMillis();
+        Flux.range(0, 10000000)
+                .buffer(2147483647)//默认的最大buffer 同于buffer
+                .parallel()
+                .runOn(Schedulers.elastic())
+                .flatMap(integers -> Flux.fromIterable(integers))
+                .subscribe(a -> list.add(a));
+        System.err.println("用时" + (System.currentTimeMillis() - start));
+        System.out.println("采用响应式 并行 带有最大buffer：" + list.size());
     }
 
 }

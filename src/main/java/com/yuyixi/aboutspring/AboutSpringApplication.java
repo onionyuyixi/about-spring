@@ -12,9 +12,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableJpaRepositories
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 @EnableTransactionManagement(proxyTargetClass = true)
-@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class},
-        scanBasePackages = "com.yuyixi.aboutspring"
-)
+@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 public class AboutSpringApplication {
 
 
